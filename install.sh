@@ -9,7 +9,7 @@ COMPUTER_NAME=""
 TOTAL_MEMORY=$[ $(free -g -tt | tail -n 1 | awk '{print $2}') + 1 ]
 TIMEZONE="Europe/Prague"
 ROOT_PASSWORD=""
-MODULES="etx4 atkbd i8042 psmouse"
+MODULES="ext4 atkbd i8042 psmouse"
 HOOKS="base udev autodetect modconf block encrypt lvm2 filesystems keyboard fsck"
 GRUB_PARAMS="earlymodules=atkbd,i8042,psmouse modules-load=atkbd,i8042,psmouse quiet"
 GRUB_PARAMS_CRYPTO=""
@@ -134,7 +134,7 @@ mount ${MAIN_HDD}1 /mnt/boot/efi
 # Install and configure
 #
 echo "(I) Installing Archlinux base system"
-pacstrap /mnt base base-devel grub-efi-x86_64 zsh vim git efibootmgr dialog wpa_supplicant
+pacstrap /mnt base base-devel grub-efi-x86_64 zsh vim git efibootmgr dialog wpa_supplicant puppet
 
 echo "(I) Generating fstab"
 genfstab -pU /mnt >> /mnt/etc/fstab
@@ -153,11 +153,11 @@ sed -i -e 's/^MODULES.*/MODULES="${MODULES}"/' /etc/mkinitcpio.conf
 sed -i -e 's/^HOOKS.*/HOOKS="${HOOKS}"/' /etc/mkinitcpio.conf
 mkinitcpio -p linux
 grub-install
-sed -i -e "s/^GRUB_CMDLINE_LINUX=\"\"/GRUB_CMDLINE_LINUX=\"${GRUB_PARAMS_CRYPTO}\"/" -e "s/^GRUB_CMDLINE_LINUX_DEFAULT=\".*/GRUB_CMDLINE_LINUX_DEFAULT=\"${GRUB_PARAMS}\"/" /etc/default/grub
+sed -i -e "s;^GRUB_CMDLINE_LINUX=\"\";GRUB_CMDLINE_LINUX=\"${GRUB_PARAMS_CRYPTO}\";" -e "s/^GRUB_CMDLINE_LINUX_DEFAULT=\".*/GRUB_CMDLINE_LINUX_DEFAULT=\"${GRUB_PARAMS}\"/" /etc/default/grub
 grub-mkconfig -o /boot/grub/grub.cfg
 EOF
 
-#umount -R /mnt
-#swapoff -a
+umount -R /mnt
+swapoff -a
 
-#reboot
+reboot
