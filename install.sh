@@ -153,7 +153,7 @@ sed -i -e 's/^MODULES.*/MODULES="${MODULES}"/' /etc/mkinitcpio.conf
 sed -i -e 's/^HOOKS.*/HOOKS="${HOOKS}"/' /etc/mkinitcpio.conf
 mkinitcpio -p linux
 grub-install
-sed -i -e 's/^GRUB_CMDLINE_LINUX=""/GRUB_CMDLINE_LINUX="${GRUB_PARAMS_CRYPTO}"/' -e 's/^GRUB_CMDLINE_LINUX_DEFAULT=""/GRUB_CMDLINE_LINUX_DEFAULT="${GRUB_PARAMS}"/' /etc/default/grub
+sed -i -e "s/^GRUB_CMDLINE_LINUX=\"\"/GRUB_CMDLINE_LINUX=\"${GRUB_PARAMS_CRYPTO}\"/" -e "s/^GRUB_CMDLINE_LINUX_DEFAULT=\".*/GRUB_CMDLINE_LINUX_DEFAULT=\"${GRUB_PARAMS}\"/" /etc/default/grub
 grub-mkconfig -o /boot/grub/grub.cfg
 EOF
 
