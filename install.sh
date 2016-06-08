@@ -13,6 +13,7 @@ MODULES="ext4 atkbd i8042 psmouse"
 HOOKS="base udev autodetect modconf block encrypt lvm2 filesystems keyboard fsck"
 GRUB_PARAMS="earlymodules=atkbd,i8042,psmouse modules-load=atkbd,i8042,psmouse quiet"
 GRUB_PARAMS_CRYPTO=""
+ADDITIONAL_PACKAGES="git puppet openssh"
 
 #
 # Functions
@@ -134,7 +135,7 @@ mount ${MAIN_HDD}1 /mnt/boot/efi
 # Install and configure
 #
 echo "(I) Installing Archlinux base system"
-pacstrap /mnt base base-devel grub-efi-x86_64 zsh vim git efibootmgr dialog wpa_supplicant puppet
+pacstrap /mnt base base-devel grub-efi-x86_64 zsh vim efibootmgr dialog wpa_supplicant ${ADDITIONAL_PACKAGES}
 
 echo "(I) Generating fstab"
 genfstab -pU /mnt >> /mnt/etc/fstab
