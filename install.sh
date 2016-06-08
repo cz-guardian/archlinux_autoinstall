@@ -157,7 +157,7 @@ sed -i -e "s/^GRUB_CMDLINE_LINUX=\"\"/GRUB_CMDLINE_LINUX=\"${GRUB_PARAMS_CRYPTO}
 grub-mkconfig -o /boot/grub/grub.cfg
 EOF
 
-umount -R /mnt
-swapoff -a
+#umount -R /mnt
+#swapoff -a
 
-reboot
+#reboot
